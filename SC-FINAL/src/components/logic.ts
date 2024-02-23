@@ -13,7 +13,12 @@ class ClickHandler {
 			"trace": err.stack
 		} }
 	}
-	static AnimePresets = class {
+	static AnimePresets = class { 
+		public static attachFx(delay: number, fx: () => any | undefined): any {
+			setTimeout(() => {
+				fx();
+			}, delay)
+		}
 		public static fadeIn(element: string, duration: number, delay: number = 0, debug?: boolean): any {
 			anime({
 				targets: element,
@@ -68,9 +73,9 @@ class ClickHandler {
 				return new Error().stack;
 			}
 		}
-		public static typeWriter(element: HTMLElement, delay: number, debug?: boolean): any {
+		public static typeWriter(element: HTMLElement, delay: number, debug?: boolean, efx?: boolean): any {
+			
 			const text = element.innerText;
-			console.log(text)
 			element.innerHTML = "";
 			let i = 0;
 			const speed = delay;
@@ -79,6 +84,8 @@ class ClickHandler {
 					element.innerHTML += text.charAt(i);
 					i++;
 					setTimeout(typeWriter, speed);
+				} else {
+					if(efx) return true
 				}
 			}
 			typeWriter();
