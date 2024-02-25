@@ -44,6 +44,7 @@ import { RouterLink, RouterView } from 'vue-router'
 <style scoped lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root {
 	--body-color: #2c2d2a;
@@ -60,8 +61,12 @@ import { RouterLink, RouterView } from 'vue-router'
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: "Hack", monospace;
+	font-family: "Poppins", sans-serif;
 	text-decoration: none;
+	background-color: transparent;
+}
+svg {
+	fill: none;
 }
 
 a {
@@ -102,6 +107,7 @@ a:hover {
 }
 
 .header {
+	font-family: "Poppins", sans-serif;
 	backdrop-filter: blur(20px);
 	display: flex;
 	align-items: center;
@@ -116,7 +122,7 @@ a:hover {
 	top: 0;
 	left: 0;
 	background-color: var(--beach-bg);
-	z-index: 6;
+	z-index: 100;
 
 	@media (max-width: 575px) {
 		width: calc(100% + 20px);
