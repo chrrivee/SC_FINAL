@@ -1,11 +1,12 @@
 <template>
+
   <head>
     <link rel='stylesheet' href='//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack-subset.css'>
     <meta name="viewport" content="width=1920,height=927, initial-scale=1.0">
   </head>
   <div>
     <div class="sx">
-      <h1 class="title"> <span class="title"> Hey! I'm <em> Sachman </em> </span> <br> </h1>
+      <h1 class="title"> <span class="title"> Hey! I'm <span class="hvr"> Sachman </span> </span> <br> </h1>
       <span class="x">And welcome to my life!</span>
     </div>
     <button class="btnx"> Click here for more !</button>
@@ -20,11 +21,11 @@
 
   <div class="anotherPic">
     <img src="https://unsplash.it/500/500">
-    <h1>Oh! Look, another picture of me <br> <span>ladies hmu &lt;3</span></h1>
+    <h1>Oh! Look, another picture of me <br> <span>scroll down for my hobbies!</span></h1>
   </div>
 
   <h1 class="hobbiesTxt">
-    ...And These are My Hobbies &lt;3
+    ...And These are My Hobbies
     <br><span class="underText1">psst!.. click the image :) </span>
   </h1>
   <div class="cards" @click="function () {
@@ -53,6 +54,52 @@
   <svg class="line1" viewBox="0 0 692 760" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M691 0V313H1V760" stroke="white" />
   </svg>
+
+  <h1 id="schoolIX"
+    style="color: rgb(156, 156, 156); position: absolute; top: 235%; left: 2%; font-size:0.8rem; transform: rotate(90deg); opacity: 0; font-family: 'Poppins' sans-serif; ">
+    Here is a timeline of the schools i've been to!
+  </h1>
+
+  <div class="contTimeline">
+    <svg class="timeline" viewBox="0 0 693 66" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 18H693M642 0V37M359 0V37M45 0V37" stroke="white" />
+    </svg>
+    <div class="schoolHolder">
+      <div class="school l">
+        <h1>St. Michaels Senior <br> Secondary School</h1>
+        <p>Elementary to 8th grade, Delhi India</p>
+      </div>
+      <div class="school c">
+        <h1>New Tech High <br> @ Coppell</h1>
+        <p>9th grade to graduation</p>
+      </div>
+      <div class="school r">
+        <h1>University of Massachusetts <br> Amherst</h1>
+        <p>My goal university for BCSE in Computer Science</p>
+      </div>
+    </div>
+    <div class="ttCircle">
+      <div class="tooltip">
+        <h1>Where I am right now!</h1>
+        <p></p>
+      </div>
+      <div class="overlap"></div>
+      <svg class="circle" style="transform: scale(0.03)" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="50" />
+      </svg>
+      <svg class="circle1" style="transform: scale(0.02)" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="50" />
+      </svg>
+    </div>
+
+
+  </div>
+
+
+
+  <!-- Intersect and event managers(divs)-->
+  <div class="WatcherH" style="position: absolute; top: 110;">
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -63,8 +110,16 @@ import { onMounted } from 'vue'
 import anime from 'animejs'
 import ClickHandler from '../components/logic'
 import AnimePresets from '../components/logic'
+import debug from '@/components/debug'
 
 onMounted(() => {
+
+  /* debug */
+  let d = new debug({ w: "2%", h: "2%" }, "NE")
+
+  console.log(d.effect());
+
+
   document.title = "Sachman's Portfolio"
   //@ts-ignore
   console.log('mounted', { w: window.innerWidth, h: window.innerHeight }, "aspect ratio", window.innerWidth / window.innerHeight)
@@ -74,6 +129,36 @@ onMounted(() => {
 
 
 
+  const targetElement = document.querySelector('.anotherPic');
+
+  const options = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.5
+  };
+  let flagE = false;
+  let overdrive0 = true;
+  const callback = (entries: any[], observer: any) => {
+    entries.forEach((entry: { isIntersecting: any }) => {
+      window.onscroll = () => {
+        console.log(flagE, 'scrollingIns')
+        flagE = true;
+      }
+      if (entry.isIntersecting && flagE && overdrive0) {
+
+        overdrive0 = false;
+      } else {
+        console.log('Element is not intersecting', flagE);
+      }
+    });
+  };
+
+
+
+  const observer = new IntersectionObserver(callback, options);
+  //@ts-ignore
+  observer.observe(targetElement);
+
   //@ts-ignore
   let efx: boolean = ClickHandler.AnimePresets.typeWriter(document.querySelector('h1'), 100, false, true)
   ClickHandler.AnimePresets.fadeIn('.x', 1700, 2000)
@@ -81,7 +166,7 @@ onMounted(() => {
   ClickHandler.AnimePresets.fadeIn('.underText1', 1000, 4200)
   let flag = false;
   let flag1 = false;
-
+  let flag2 = false;
   let inverter = false;
 
   //@ts-ignore
@@ -94,11 +179,25 @@ onMounted(() => {
         left: '30%',
         easing: 'cubicBezier(0.575, 0.015, 0.515, 1.025)',
         duration: 400,
-        begin : function(anim) {
+        begin: function (anim) {
           inverter = false;
         },
         complete: function (anim) {
           inverter = true;
+          if (!flag2) {
+            ClickHandler.AnimePresets.fadeIn('.contTimeline', 2400, 600)
+            anime({
+              targets: '.circle',
+              scale: [0.025, 0.03],
+              opacity: [0.3, 0.7],
+              duration: 600,
+              easing: 'cubicBezier(.57,.2,.47,.83)',
+              loop: true,
+              direction: 'alternate',
+              delay: 10
+            })
+            flag2 = true;
+          }
         }
       })
     } else {
@@ -108,7 +207,7 @@ onMounted(() => {
         left: '10%',
         easing: 'cubicBezier(0.575, 0.015, 0.515, 1.025)',
         duration: 400,
-        begin : function(anim) {
+        begin: function (anim) {
           inverter = true;
         },
         complete: function (anim) {
@@ -118,8 +217,33 @@ onMounted(() => {
     }
   })
 
+  let flag3 = true;
+  //@ts-ignore
+  document.querySelector(".overlap")?.addEventListener('click', () => {
+    console.log('clicked')
+    if (flag3) {
+      anime({
+        targets: '.tooltip',
+        opacity: 1,
+        duration: 400,
+        easing: 'linear'
+      })
+      flag3 = false;
+    } else {
+      anime({
+        targets: '.tooltip',
+        opacity: 0,
+        duration: 400,
+        easing: 'linear'
+      })
+      flag3 = true;
+    }
+  })
+
+
   //@ts-ignore
   document.querySelector('.btnx').addEventListener('click', () => {
+
     console.log('clicked')
     if (!flag) {
 
@@ -150,8 +274,9 @@ onMounted(() => {
               begin: function (anim) {
                 ClickHandler.AnimePresets.fadeIn('.line1', 400)
                 ClickHandler.AnimePresets.fadeIn('.hobbiesTxt', 2400, 2400)
-                ClickHandler.AnimePresets.fadeIn('.cards', 2100)
-                ClickHandler.AnimePresets.fadeIn('.anotherPic', 1200, 40)
+                ClickHandler.AnimePresets.fadeIn('.cards', 2100, 2800)
+                ClickHandler.AnimePresets.fadeIn('#schoolIX', 1200, 3200)
+                console.log(ClickHandler.AnimePresets.fadeIn('.anotherPic', 1200, 60, true))
                 flag1 = true;
                 console.log('begin')
                 //@ts-ignore
@@ -218,6 +343,20 @@ export default {
   overflow-y: hidden;
 }
 
+
+
+.WatcherH {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 10%;
+  background-color: transparent;
+  opacity: 0;
+  z-index: 0;
+  background-color: #967bb6;
+}
+
 .cards {
   cursor: pointer;
   user-select: none;
@@ -250,6 +389,123 @@ export default {
 
     .card__text {
       opacity: 1;
+    }
+  }
+}
+
+
+
+.contTimeline {
+  opacity: 0;
+  color: white;
+
+  .circle {
+    fill: #967bb6;
+    position: absolute;
+    top: 209.8%;
+    left: 45%;
+    z-index: 4;
+    background-color: transparent;
+    opacity: 1;
+
+
+  }
+
+  .circle1 {
+    fill: #967bb6;
+    position: absolute;
+    top: 209.8%;
+    left: 45%;
+    z-index: 9;
+    background-color: transparent;
+    opacity: 1;
+  }
+
+  .overlap {
+    position: absolute;
+    top: 264.5%;
+    left: 71.5%;
+    width: 2%;
+    height: 3.5%;
+    z-index: 10;
+    background-color: transparent;
+    opacity: 1;
+    cursor: pointer;
+  }
+
+  .ttCircle {
+
+    .tooltip {
+      transition: 1s ease;
+      opacity: 0;
+      position: absolute;
+      top: 239.8%;
+      left: 62.3%;
+      border-radius: 12px;
+      box-sizing: border-box;
+      border: 3px solid #967bb6;
+      width: 20%;
+      height: 20%;
+
+      h1 {
+        font-family: "Poppins", sans-serif;
+        font-size: 1rem;
+
+        color: white;
+        text-align: center;
+        justify-content: center;
+        background-color: transparent;
+      }
+
+      background-color: rgb(39, 39, 39);
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border-width: 10px;
+        border-style: solid;
+        border-color: #967bb6 transparent transparent transparent;
+      }
+    }
+  }
+
+
+
+
+
+  .timeline {
+    position: absolute;
+    top: 260%;
+    left: 0%;
+    z-index: 0;
+    background: transparent;
+    transform: scale(0.8);
+  }
+
+  .schoolHolder {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 300px;
+    user-select: none;
+    position: absolute;
+    top: 275%;
+    left: 5%;
+
+    .l {
+      text-align: left;
+    }
+
+    .c {
+      margin-left: -30px;
+      text-align: center;
+    }
+
+    .r {
+      margin-right: 120px;
+      text-align: right;
     }
   }
 }
@@ -294,7 +550,7 @@ export default {
 .anotherPic {
   width: 100vw;
   position: absolute;
-  top:72%;
+  top: 72%;
   left: 1%;
   z-index: 10;
   background-color: transparent;
@@ -315,8 +571,9 @@ export default {
     position: absolute;
     top: 20%;
     left: 22%;
+
     span {
-      color : #7d7d7d;
+      color: #7d7d7d;
       font-size: 1rem;
       font-weight: 400;
       background-color: transparent;
@@ -336,6 +593,7 @@ export default {
   opacity: 0;
   z-index: 4;
 }
+
 .hobby__list {
   user-select: none;
   opacity: 0;
@@ -413,6 +671,21 @@ export default {
   right: 3%;
   top: 10%;
   border-right: 80px;
+  border-radius: 5px;
+  border: transparent;
+
+  transition: 1s ease;
+
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 1);
+  }
 }
 
 .line {
@@ -463,6 +736,7 @@ export default {
 .title {
   font-weight: 600;
   text-transform: capitalize;
+
   &::after {
     content: "";
     display: inliune-block;
@@ -517,4 +791,5 @@ export default {
   color: rgb(213, 213, 213);
   opacity: 0.8;
   background: transparent;
-}</style>
+}
+</style>

@@ -19,8 +19,8 @@ import { RouterLink, RouterView } from 'vue-router'
 				<div class="header-menu">
 					<nav>
 						<RouterLink to="/">Home</RouterLink>
-						<RouterLink to="/about">About</RouterLink>
-						<RouterLink to="/services">Services</RouterLink>
+						<RouterLink to="/about">My qualities</RouterLink>
+						<RouterLink to="/STUCO">Why I want to be in STUCO</RouterLink>
 					</nav>
 				</div>
 				<div class="header-icons">
@@ -38,13 +38,23 @@ import { RouterLink, RouterView } from 'vue-router'
 		</div>
 	</header>
 	
-	<RouterView />
+	<div>
+		<RouterView />
+		
+	</div>
+	
+
+	
 </template>
 
 <style scoped lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+
+
 
 :root {
 	--body-color: #2c2d2a;

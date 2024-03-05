@@ -19,18 +19,17 @@ class ClickHandler {
 				fx();
 			}, delay)
 		}
-		public static fadeIn(element: string, duration: number, delay: number = 0, debug?: boolean): any {
+		public static fadeIn(element: string, duration: number, delay: number = 0, effect?: boolean): any {
 			anime({
 				targets: element,
 				opacity: [0, 1],
 				duration: duration,
 				easing: "easeInOutQuad",
-				delay: delay
+				delay: delay,
+				finish: () => {
+					return true;
+				}
 			})
-			if(debug) {
-				console.log(`Fading in ${element} over ${duration}ms`)
-				return new Error().stack;
-			}
 		}
 		public static fadeOut(element: string, duration: number, delay: number = 0, debug?: boolean): any {
 			anime({
@@ -59,19 +58,19 @@ class ClickHandler {
 				return new Error().stack;
 			}
 		}
-		public static slideOut(element: string, duration: number, delay: number = 0, debug?: boolean): any {
+		public static slideOut(element: string, duration: number, delay: number = 0, effect?: boolean): any {
 			anime({
 				targets: element,
 				translateX: [0, 100],
 				opacity: [1, 0],
 				duration: duration,
 				easing: "easeInOutQuad",
-				delay: delay
+				delay: delay,
+				finish: () => {
+					if(effect) return true;
+				}
+			
 			})
-			if(debug) {
-				console.log(`Sliding out ${element} over ${duration}ms`)
-				return new Error().stack;
-			}
 		}
 		public static typeWriter(element: HTMLElement, delay: number, debug?: boolean, efx?: boolean): any {
 			
@@ -96,6 +95,10 @@ class ClickHandler {
 		}
 	}
 }
+
+
+
+
 
 export default ClickHandler;
 
